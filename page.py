@@ -37,11 +37,14 @@ class page (object):
 
         #based on the known location of the title, saves that as the name for the wikipage object
         #self._name = soup.title.string
-        print ("Spidering "+ self._name)
+        #print ("Spidering "+ self._name)
+        print ("Spidering "+ self._url)
 
         #pulls out all the links in the wikipedia page and only displays the ones with /wiki/ in them
         #for link in soup.find_all('a'):
             #hrefs = str(link.get('href'))
+        for link in self._links:
+            hrefs =link
 
             if '/wiki/' in (hrefs)[:6]:
                 self._links.append("http://en.wikipedia.org" + hrefs)
