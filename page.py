@@ -7,9 +7,7 @@ class page (object):
     DEPTH = 3
 
     def __init__(self, url, parent):
-        #self._name = "this is a name"
         self._url = url
-        #self._depth = depth
         self._links = []
         self._parent = parent
         self._depth = 0
@@ -34,16 +32,16 @@ class page (object):
 
 
         #imports all the stuff from the url
-        r = requests.get(self._url)
-        soup = BeautifulSoup(r.text)
+        #r = requests.get(self._url)
+        #soup = BeautifulSoup(r.text)
 
         #based on the known location of the title, saves that as the name for the wikipage object
-        self._name = soup.title.string
+        #self._name = soup.title.string
         print ("Spidering "+ self._name)
 
         #pulls out all the links in the wikipedia page and only displays the ones with /wiki/ in them
-        for link in soup.find_all('a'):
-            hrefs = str(link.get('href'))
+        #for link in soup.find_all('a'):
+            #hrefs = str(link.get('href'))
 
             if '/wiki/' in (hrefs)[:6]:
                 self._links.append("http://en.wikipedia.org" + hrefs)
@@ -51,7 +49,7 @@ class page (object):
             elif 'pink' in hrefs.lower():
                 print("pink found! in level %s" % (str(self._depth)))
                 sys.exit()
-        if self._depth < self.DEPTH:
+        if self._depth < self.DEPTH-1:
             for lnk in self._links:
                 newpage = page(lnk, self)
                 newpage._depth=self._depth+1
