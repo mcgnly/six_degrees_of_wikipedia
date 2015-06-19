@@ -3,8 +3,6 @@ __author__ = '03mcginley33'
 
 from page import page
 
-startpage = page( "http://en.wikipedia.org/wiki/Armadillo", 3, None)
+startpage = page( "http://en.wikipedia.org/wiki/Armadillo", None)
 
-#print(startpage.getName())
-print ("hello")
 startpage.spider()
