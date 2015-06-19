@@ -4,12 +4,15 @@ from bs4 import BeautifulSoup
 import sys
 
 class page (object):
-    def __init__(self, url, depth, parent):
+    DEPTH = 3
+
+    def __init__(self, url, parent):
         #self._name = "this is a name"
         self._url = url
-        self._depth = depth
+        #self._depth = depth
         self._links = []
         self._parent = parent
+        self._depth = 0
         pass
 
     def getName (self):
@@ -40,15 +43,18 @@ class page (object):
 
         #pulls out all the links in the wikipedia page and only displays the ones with /wiki/ in them
         for link in soup.find_all('a'):
-            if '/wiki/' in str(link.get('href'))[:6]:
-                self._links.append("http://en.wikipedia.org" + str(link.get('href')))
+            hrefs = str(link.get('href'))
+
+            if '/wiki/' in (hrefs)[:6]:
+                self._links.append("http://en.wikipedia.org" + hrefs)
                 #print (link.get('href'))
-            elif 'pink' in (str(link.get('href'))).lower():
-                print("pink found! in %s level" % (str(self._depth)))
+            elif 'pink' in hrefs.lower():
+                print("pink found! in level %s" % (str(self._depth)))
                 sys.exit()
-        if self._depth > 0:
+        if self._depth < self.DEPTH:
             for lnk in self._links:
-                newpage = page(lnk, self._depth - 1, self)
+                newpage = page(lnk, self)
+                newpage._depth=self._depth+1
                 newpage.spider()
                 #self._pages.append(newpage)
         else:
